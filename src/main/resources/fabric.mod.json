@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "aether_realism",
+	"version": "${version}",
+	"name": "Aether Realism",
+	"description": "A configurable AAA-inspired visual overhaul: dynamic lights, animated foliage and water, atmospheric fog, volumetric-style light scattering, god rays, bloom, color grading, weather and ambient particles. Client-side only.",
+	"authors": [
+		"Aether Realism contributors"
+	],
+	"contact": {
+		"sources": "https://github.com/PlumedeParis/AAA-Minecraft"
+	},
+	"license": "MIT",
+	"icon": "assets/aether_realism/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.aetherrealism.AetherRealismClient"
+		]
+	},
+	"mixins": [
+		{
+			"config": "aether_realism.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.17.3",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"sodium": "*",
+		"iris": "*"
+	}
+}

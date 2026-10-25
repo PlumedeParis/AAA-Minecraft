@@ -1,0 +1,78 @@
+{
+    "targets": {
+        "scene": {},
+        "bloom_a": {},
+        "bloom_b": {},
+        "rays": {}
+    },
+    "passes": [
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "aether_realism:post/atmosphere",
+            "inputs": [
+                { "sampler_name": "In", "target": "minecraft:main", "bilinear": true },
+                { "sampler_name": "Depth", "target": "minecraft:main", "use_depth_buffer": true },
+                { "sampler_name": "Params", "location": "aether_realism:params", "width": 64, "height": 1, "bilinear": false }
+            ],
+            "output": "scene"
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "aether_realism:post/bloom_extract",
+            "inputs": [
+                { "sampler_name": "In", "target": "scene", "bilinear": true },
+                { "sampler_name": "Params", "location": "aether_realism:params", "width": 64, "height": 1, "bilinear": false }
+            ],
+            "output": "bloom_a"
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "aether_realism:post/bloom_blur",
+            "inputs": [
+                { "sampler_name": "In", "target": "bloom_a", "bilinear": true },
+                { "sampler_name": "Params", "location": "aether_realism:params", "width": 64, "height": 1, "bilinear": false }
+            ],
+            "output": "bloom_b",
+            "uniforms": {
+                "AetherBlur": [
+                    { "name": "BlurDirection", "type": "vec2", "value": [ 1.0, 0.0 ] }
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "aether_realism:post/bloom_blur",
+            "inputs": [
+                { "sampler_name": "In", "target": "bloom_b", "bilinear": true },
+                { "sampler_name": "Params", "location": "aether_realism:params", "width": 64, "height": 1, "bilinear": false }
+            ],
+            "output": "bloom_a",
+            "uniforms": {
+                "AetherBlur": [
+                    { "name": "BlurDirection", "type": "vec2", "value": [ 0.0, 1.0 ] }
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "aether_realism:post/godrays",
+            "inputs": [
+                { "sampler_name": "In", "target": "scene", "bilinear": true },
+                { "sampler_name": "Depth", "target": "minecraft:main", "use_depth_buffer": true },
+                { "sampler_name": "Params", "location": "aether_realism:params", "width": 64, "height": 1, "bilinear": false }
+            ],
+            "output": "rays"
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "aether_realism:post/composite",
+            "inputs": [
+                { "sampler_name": "In", "target": "scene" },
+                { "sampler_name": "Bloom", "target": "bloom_a", "bilinear": true },
+                { "sampler_name": "Rays", "target": "rays", "bilinear": true },
+                { "sampler_name": "Params", "location": "aether_realism:params", "width": 64, "height": 1, "bilinear": false }
+            ],
+            "output": "minecraft:main"
+        }
+    ]
+}
