@@ -8,10 +8,8 @@ in-game settings screen.
 Everything is **client-side**. It works in single-player and on any server without server installation, and it
 never changes blocks, mobs, survival balance or server gameplay.
 
-> **Status: first release, not yet build-tested.** The code was written against the real 1.21.11 APIs, read from
-> the Fabric API, Sodium, Iris, LambDynamicLights and Parchment sources and the vanilla 1.21.11 shaders. The
-> environment it was written in could not download Minecraft or Fabric, though. It has not been compiled or
-> launched yet. See [Testing status](#testing-status) for what to check first.
+> **Status: first release. It compiles (`./gradlew build` passes in CI against Minecraft 1.21.11 and Fabric API
+> 0.141.6) but has not been launched in game yet.** See [Testing status](#testing-status) for what to check first.
 
 ---
 
@@ -179,9 +177,9 @@ color and every slider.
 
 ## Testing status
 
-Not yet done, because this environment could not download Minecraft or Fabric:
-
-- `./gradlew build`, a client launch, and the in-game checks (categories, persistence, resolutions, weather,
+- Done: `./gradlew build` succeeds in GitHub Actions (`.github/workflows/build.yml`), so every Minecraft,
+  Fabric API and mixin signature used compiles against 1.21.11.
+- Not done yet: a client launch and the in-game checks (categories, persistence, resolutions, weather,
   dimensions, Sodium/Iris).
 
 Signatures were verified against 1.21.11 sources wherever possible. If something fails, the most likely places are:

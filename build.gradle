@@ -13,12 +13,6 @@ repositories {
 	// Loom adds the Minecraft, Fabric and Mojang repositories automatically.
 }
 
-loom {
-	mixin {
-		defaultRefmapName = "aether_realism.refmap.json"
-	}
-}
-
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.officialMojangMappings()
